@@ -1,6 +1,7 @@
 package com.example.ecommerce.exceptions;
 
 import static com.example.ecommerce.constants.StringConstants.BAD_DATA;
+import static com.example.ecommerce.constants.StringConstants.BAD_REQUEST;
 import static com.example.ecommerce.constants.StringConstants.CONFLICT;
 import static com.example.ecommerce.constants.StringConstants.NOT_FOUND;
 import static com.example.ecommerce.constants.StringConstants.SERVER_ERROR;
@@ -77,6 +78,14 @@ public class ExceptionController {
         exception.getMessage());
 
     return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+  }
+
+  @ExceptionHandler(BadRequest.class)
+  protected ResponseEntity<ExceptionResponse> BadRequest(BadRequest exception) {
+    ExceptionResponse response = new ExceptionResponse(BAD_REQUEST, new Date(),
+        exception.getMessage());
+
+    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
   }
 
   @ExceptionHandler(ServiceUnavailable.class)

@@ -13,6 +13,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
@@ -97,6 +98,19 @@ public class UserServiceImpl implements UserService {
       throw new ServiceUnavailable(e);
     }
     return updatedUser;
+  }
+
+  @Override
+  public User findUserByEmail(String email) {
+    User foundUser = null;
+
+    try{
+      foundUser = userRepository.findByEmail(email); //maybe finduserbyemail
+    } catch(DataAccessException e) {
+      logger.error(e.getMessage());
+    }
+
+    return foundUser;
   }
 
   @Override

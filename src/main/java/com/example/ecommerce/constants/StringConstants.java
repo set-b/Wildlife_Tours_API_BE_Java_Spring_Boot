@@ -14,6 +14,7 @@ public class StringConstants {
   public static final String DELETE_REQUEST = "Delete request received for ";
   public static final String POST_REQUEST = "Post request received for ";
   public static final String BAD_DATA = "Bad data";
+  public static final String BAD_REQUEST = "Bad request";
   public static final String SERVER_ERROR = "Server error";
   public static final String UNEXPECTED_ERROR = "Unexpected server error";
 
@@ -29,4 +30,20 @@ public class StringConstants {
   //roles
   public static final String EMPLOYEE = "employee";
   public static final String ADMIN = "admin";
+
+  //authorization
+  public static final String UNAUTHORIZED = "unauthorized";
+  public static final String AUTHORIZATION_HEADER_NAME = "Authorization";
+  public static final String TOKEN_PREFIX = "Bearer ";
+  public static final String ISSUER = "wildlife-tour";
+  public static final String INVALID_EMAIL_PASSWORD = "Invalid email or password";
+  public static final String SECRET_KEY = "secret";
+  public static final String CLAIMS_ATTRIBUTE = "claims";
+  public static final String EMAIL_ATTRIBUTE = "email";
+  public static final String ROLES_ATTRIBUTE = "roles";
+  public static final String MANAGER_ROLE_TYPE = "manager";
+  public static final String EMPLOYEE_ROLE_TYPE = "employee";
+  public static final String MISSING_INVALID_ERROR = "Missing or invalid authorization header";
+  public static final String APPLICATION_JSON = "application/json";
+
 }
