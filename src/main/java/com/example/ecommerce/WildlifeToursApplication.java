@@ -11,5 +11,14 @@ public class WildlifeToursApplication {
 
   public static void main(String[] args) {
     SpringApplication.run(WildlifeToursApplication.class, args);
+
   }
 }
+/*
+Todo:
+-Create entities and configure bidirectional relationships
+-Create data and validators, if necessary
+-Create Controllers, Repos, and Services
+-Testing
+-Possibly add atuthentiation and authorization through Oauth and jwt tokens
+ */
