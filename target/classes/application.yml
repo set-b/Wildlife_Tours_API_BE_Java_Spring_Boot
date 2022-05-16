@@ -17,3 +17,6 @@ spring:
   mvc:
     pathMatch:
       matching-strategy: ant-path-matcher
+  security:
+    user:
+      password: password12345678

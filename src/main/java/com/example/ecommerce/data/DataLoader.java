@@ -2,6 +2,7 @@ package com.example.ecommerce.data;
 
 import static com.example.ecommerce.constants.StringConstants.ADMIN;
 import static com.example.ecommerce.constants.StringConstants.EMPLOYEE;
+import static com.example.ecommerce.constants.StringConstants.MANAGER_ROLE_TYPE;
 
 import com.example.ecommerce.models.Address;
 import com.example.ecommerce.models.Customer;
@@ -24,6 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 /**
@@ -46,6 +48,9 @@ public class DataLoader implements CommandLineRunner {
   private ProductRepository productRepository;
   @Autowired
   private UserRepository userRepository;
+
+  @Autowired
+  private BCryptPasswordEncoder bCryptPasswordEncoder;
 
   private Greeting greeting;
   private Greeting greetingTwo;
@@ -169,17 +174,21 @@ public class DataLoader implements CommandLineRunner {
 
   private void loadUsers() {
     user = userRepository.save(
-        new User("Claire Redfield", "employee", new String[]{EMPLOYEE}, "credfield@ecommerce.com",
+        new User("Claire Redfield", "employee", EMPLOYEE, "credfield@ecommerce.com",
             "password12345"));
     userTwo = userRepository.save(
-        new User("Colby Jack", "employee", new String[]{EMPLOYEE}, "cheesewizard@ecommerce.com",
+        new User("Colby Jack", "employee", EMPLOYEE, "cheesewizard@ecommerce.com",
             "pastrami25"));
     userThree = userRepository.save(
-        new User("Duragin Fohrs", "Systems Administrator", new String[]{ADMIN},
+        new User("Duragin Fohrs", "Systems Administrator", ADMIN,
             "dfohrs@ecommerce.com", "theseventhseal1"));
     userFour = userRepository.save(
-        new User("Michael Scott", "Boss", new String[]{ADMIN}, "mscott@ecommerce.com",
+        new User("Michael Scott", "Boss", ADMIN, "mscott@ecommerce.com",
             "supersecretpassword1!"));
+    String encodedPassword = bCryptPasswordEncoder.encode("password12345678");
+    User authorizationUserTest = userRepository.save(
+        new User("Test", "Manager", MANAGER_ROLE_TYPE,
+            "test@testemail.com", encodedPassword));
   }
 
 

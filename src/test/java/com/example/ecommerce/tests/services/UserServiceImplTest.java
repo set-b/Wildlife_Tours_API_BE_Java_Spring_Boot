@@ -47,7 +47,7 @@ class UserServiceImplTest {
   @BeforeEach
   public void setUp() throws Exception {
     closeable = MockitoAnnotations.openMocks(this);
-    user = new User("Test Testerton", "employee", new String[]{EMPLOYEE},
+    user = new User("Test Testerton", "employee", EMPLOYEE,
         "test@test.com",
         "password12345");
   }

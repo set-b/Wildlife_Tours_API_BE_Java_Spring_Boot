@@ -35,8 +35,8 @@ public class User {
   @NotBlank(message = "title " + REQUIRED_FIELD)
   private String title;
 
-  @NotNull(message = "roles " + REQUIRED_FIELD)
-  private String[] roles;
+  @NotNull(message = "roles " + REQUIRED_FIELD) //todo: change to single role
+  private String role;
 
   @NotBlank(message = "email " + REQUIRED_FIELD)
   @Email
@@ -51,11 +51,11 @@ public class User {
   }
 
   public User(String name, String title,
-      @NotNull(message = "roles" + REQUIRED_FIELD) String[] roles,
+      @NotNull(message = "roles" + REQUIRED_FIELD) String role,
       String email, String password) {
     this.name = name;
     this.title = title;
-    this.roles = roles;
+    this.role = role;
     this.email = email;
     this.password = password;
   }
@@ -84,12 +84,12 @@ public class User {
     this.title = title;
   }
 
-  public String[] getRoles() {
-    return roles;
+  public String getRoles() {
+    return role;
   }
 
-  public void setRoles(String[] roles) {
-    this.roles = roles;
+  public void setRoles(String role) {
+    this.role = role;
   }
 
   public String getEmail() {
@@ -114,7 +114,7 @@ public class User {
         "id=" + id +
         ", name='" + name + '\'' +
         ", title='" + title + '\'' +
-        ", roles=" + Arrays.toString(roles) +
+        ", roles=" + role +
         ", email='" + email + '\'' +
         ", password='" + password + '\'' +
         '}';
@@ -130,16 +130,14 @@ public class User {
     }
     User user = (User) o;
     return Objects.equals(id, user.id) && Objects.equals(name, user.name)
-        && Objects.equals(title, user.title) && Arrays.equals(roles, user.roles)
+        && Objects.equals(title, user.title) && Objects.equals(role, user.role)
         && Objects.equals(email, user.email) && Objects.equals(password,
         user.password);
   }
 
   @Override
   public int hashCode() {
-    int result = Objects.hash(id, name, title, email, password);
-    result = 31 * result + Arrays.hashCode(roles);
-    return result;
+    return Objects.hash(id, name, title, role, email, password);
   }
 
   @JsonIgnore
@@ -148,7 +146,7 @@ public class User {
         Objects.isNull(id) &&
             Objects.isNull(name) &&
             Objects.isNull(title) &&
-            Objects.isNull(roles) &&
+            Objects.isNull(role) &&
             Objects.isNull(email) &&
             Objects.isNull(password);
   }
