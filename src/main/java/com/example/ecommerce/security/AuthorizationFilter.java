@@ -19,7 +19,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
   @Autowired
   JwtUtils jwtUtils;
-
+  @Autowired
   MyAppUserDetailsService userDetailsService;
 
   @Override

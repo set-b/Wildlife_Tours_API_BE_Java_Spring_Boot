@@ -19,7 +19,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired
   UserDetailsService userDetailsService;
-
   @Autowired
   AuthorizationFilter authorizationFilter;
 
@@ -42,7 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.csrf().disable().authorizeRequests()
-        .antMatchers("/login").permitAll()
+        .antMatchers("/login").permitAll() //added slash, but endpoint might not contain slash
         .anyRequest().authenticated()
         .and().sessionManagement().sessionCreationPolicy(
             SessionCreationPolicy.STATELESS); // this will be used for authorization
