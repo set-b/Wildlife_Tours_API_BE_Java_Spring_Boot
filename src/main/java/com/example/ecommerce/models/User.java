@@ -41,7 +41,7 @@ public class User {
   @NotBlank(message = "email " + REQUIRED_FIELD)
   @Email
   @Column(unique = true)
-  private String email;
+  private String email; // this will be new username
 
   @NotBlank(message = "password " + REQUIRED_FIELD)
   @Length(min = 8, message = BAD_DATA + "password must be at least 8 characters in length")

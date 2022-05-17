@@ -49,8 +49,8 @@ public class DataLoader implements CommandLineRunner {
   @Autowired
   private UserRepository userRepository;
 
-  @Autowired
-  private BCryptPasswordEncoder bCryptPasswordEncoder;
+//  @Autowired
+//  private BCryptPasswordEncoder bCryptPasswordEncoder;
 
   private Greeting greeting;
   private Greeting greetingTwo;
@@ -185,10 +185,10 @@ public class DataLoader implements CommandLineRunner {
     userFour = userRepository.save(
         new User("Michael Scott", "Boss", ADMIN, "mscott@ecommerce.com",
             "supersecretpassword1!"));
-    String encodedPassword = bCryptPasswordEncoder.encode("password12345678");
-    User authorizationUserTest = userRepository.save(
-        new User("Test", "Manager", MANAGER_ROLE_TYPE,
-            "test@testemail.com", encodedPassword));
+//    String encodedPassword = bCryptPasswordEncoder.encode("password12345678");
+//    User authorizationUserTest = userRepository.save(
+//        new User("Test", "Manager", MANAGER_ROLE_TYPE,
+//            "test@testemail.com", encodedPassword));
   }
 
 
