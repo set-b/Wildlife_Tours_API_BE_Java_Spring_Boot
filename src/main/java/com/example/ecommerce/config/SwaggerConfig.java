@@ -31,8 +31,8 @@ public class SwaggerConfig {
 
   private ApiInfo apiDetails() {
     return new ApiInfo(
-        "Ecommerce REST API",
-        "Java REST API project for an ecommerce website",
+        "Wildlife Tours REST API",
+        "Java REST API project for a fictional wildlife tour company",
         "1.0",
         "Sample",
         new springfox.documentation.service.Contact("Brandyn Tse",
