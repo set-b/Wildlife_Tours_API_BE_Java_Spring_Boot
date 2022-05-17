@@ -1,5 +1,6 @@
 package com.example.ecommerce.exceptions;
 
+import static com.example.ecommerce.constants.StringConstants.BAD_CREDENTIALS;
 import static com.example.ecommerce.constants.StringConstants.BAD_DATA;
 import static com.example.ecommerce.constants.StringConstants.BAD_REQUEST;
 import static com.example.ecommerce.constants.StringConstants.CONFLICT;
@@ -78,6 +79,14 @@ public class ExceptionController {
         exception.getMessage());
 
     return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+  }
+
+  @ExceptionHandler(BadCredentialsException.class)
+  protected ResponseEntity<ExceptionResponse> badCredentials(BadCredentialsException exception) {
+    ExceptionResponse response = new ExceptionResponse(BAD_CREDENTIALS, new Date(),
+        exception.getMessage());
+
+    return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
   }
 
   @ExceptionHandler(BadRequest.class)

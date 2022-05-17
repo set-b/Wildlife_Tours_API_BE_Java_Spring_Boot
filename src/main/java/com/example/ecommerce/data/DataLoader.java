@@ -11,11 +11,13 @@ import com.example.ecommerce.models.Item;
 import com.example.ecommerce.models.Order;
 import com.example.ecommerce.models.Product;
 import com.example.ecommerce.models.User;
+import com.example.ecommerce.models.UserAccount;
 import com.example.ecommerce.repositories.CustomerRepository;
 import com.example.ecommerce.repositories.GreetingRepository;
 import com.example.ecommerce.repositories.ItemRepository;
 import com.example.ecommerce.repositories.OrderRepository;
 import com.example.ecommerce.repositories.ProductRepository;
+import com.example.ecommerce.repositories.UserAccountRepository;
 import com.example.ecommerce.repositories.UserRepository;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
@@ -48,6 +50,9 @@ public class DataLoader implements CommandLineRunner {
   private ProductRepository productRepository;
   @Autowired
   private UserRepository userRepository;
+
+  @Autowired
+  private UserAccountRepository userAccountRepository;
 
 //  @Autowired
 //  private BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -189,6 +194,8 @@ public class DataLoader implements CommandLineRunner {
 //    User authorizationUserTest = userRepository.save(
 //        new User("Test", "Manager", MANAGER_ROLE_TYPE,
 //            "test@testemail.com", encodedPassword));
+
+    UserAccount userAccount = userAccountRepository.save(new UserAccount("user", "password", true));
   }
 
 

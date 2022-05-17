@@ -38,10 +38,12 @@ public class StringConstants {
   public static final String TOKEN_PREFIX = "Bearer ";
   public static final String ISSUER = "wildlife-tour";
   public static final String INVALID_EMAIL_PASSWORD = "Invalid email or password";
-  public static final String SECRET_KEY = "secret";
+  public static final String SECRET = "secret";
   public static final String CLAIMS_ATTRIBUTE = "claims";
   public static final String EMAIL_ATTRIBUTE = "email";
   public static final String ROLES_ATTRIBUTE = "roles";
+
+  public static final String BAD_CREDENTIALS = "Invalid user credentials";
   public static final String MANAGER_ROLE_TYPE = "manager";
   public static final String EMPLOYEE_ROLE_TYPE = "employee";
   public static final String MISSING_INVALID_ERROR = "Missing or invalid authorization header";
