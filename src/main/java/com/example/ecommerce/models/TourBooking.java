@@ -32,6 +32,8 @@ public class TourBooking {
 //      message = "Payment method must be a valid card number")
   @CreditCardNumber // todo test this
   private String cardNo;
+  @NotNull(message = "Tour Code " + REQUIRED_FIELD)
+  private String tourCode;
   @NotNull(message = "Reserved date " + REQUIRED_FIELD)
   @JsonFormat(pattern = "yyyy-MM-dd", lenient = OptBoolean.FALSE)// todo test this
   //@DateTimeFormat(pattern = "yyyy-MM-dd") //
@@ -43,9 +45,10 @@ public class TourBooking {
   public TourBooking() {
   }
 
-  public TourBooking(Contact contact, String cardNo, Date reservedDate, Long tourId) {
+  public TourBooking(Contact contact, String cardNo, String tourCode, Date reservedDate, Long tourId) {
     this.contact = contact;
     this.cardNo = cardNo;
+    this.tourCode = tourCode;
     this.reservedDate = reservedDate;
     this.tourId = tourId;
   }
@@ -74,6 +77,9 @@ public class TourBooking {
     this.cardNo = cardNo;
   }
 
+  public String getTourCode() { return tourCode;}
+  public void setTourCode(String tourCode) {this.tourCode = tourCode;}
+
   public Date getReservedDate() {
     return reservedDate;
   }
@@ -96,6 +102,7 @@ public class TourBooking {
         "id=" + id +
         ", contact=" + contact +
         ", cardNo='" + cardNo + '\'' +
+        ", tourCode='" + tourCode + '\'' +
         ", reservedDate=" + reservedDate +
         ", tourId=" + tourId +
         '}';
@@ -111,13 +118,14 @@ public class TourBooking {
     }
     TourBooking that = (TourBooking) o;
     return Objects.equals(id, that.id) && Objects.equals(contact, that.contact)
-        && Objects.equals(cardNo, that.cardNo) && Objects.equals(reservedDate,
-        that.reservedDate) && Objects.equals(tourId, that.tourId);
+        && Objects.equals(cardNo, that.cardNo) && Objects.equals(tourCode,
+        that.tourCode) && Objects.equals(reservedDate, that.reservedDate)
+        && Objects.equals(tourId, that.tourId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, contact, cardNo, reservedDate, tourId);
+    return Objects.hash(id, contact, cardNo, tourCode, reservedDate, tourId);
   }
 
   @JsonIgnore
@@ -126,6 +134,7 @@ public class TourBooking {
         Objects.isNull(id) &&
             Objects.isNull(contact) &&
             Objects.isNull(cardNo) &&
+            Objects.isNull(tourCode) &&
             Objects.isNull(reservedDate) &&
             Objects.isNull(tourId);
   }

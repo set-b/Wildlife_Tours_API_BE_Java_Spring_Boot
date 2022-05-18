@@ -81,6 +81,23 @@ public class TourBookingController {
     return new ResponseEntity<>(tourBookingService.getTourBookingById(id), HttpStatus.OK);
   }
 
+  @GetMapping("/tourcode/{tourcode}")
+  @Operation(summary = "get TourBooking by tourBooking tour code",
+      parameters = {
+          @Parameter(name = "tour code", required = true,
+              description = "The tour code of the tourBooking to be retrieved", allowEmptyValue = false),
+      },
+      responses = {
+          @ApiResponse(responseCode = "200", description = "TourBooking with identical id"),
+          @ApiResponse(responseCode = "400", description = "Id must be positive"),
+          @ApiResponse(responseCode = "404", description = "TourBooking with given id not found")
+      })
+  public ResponseEntity<TourBooking> getTourBookingByTourCode(@PathVariable String tourCode) {
+    logger.info(new Date() + QUERY_REQUEST + "tourBooking with tour code " + tourCode);
+
+    return new ResponseEntity<>(tourBookingService.getTourBookingByTourCode(tourCode), HttpStatus.OK);
+  }
+
   /**
    * Saves a TourBooking Object with the data/state provided by the user to the database.
    *

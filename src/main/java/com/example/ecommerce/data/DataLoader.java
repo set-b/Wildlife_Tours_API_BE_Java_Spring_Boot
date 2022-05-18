@@ -1,6 +1,7 @@
 package com.example.ecommerce.data;
 
 import static com.example.ecommerce.constants.StringConstants.ADMIN;
+import static com.example.ecommerce.constants.StringConstants.BASIC_USER;
 import static com.example.ecommerce.constants.StringConstants.EMPLOYEE;
 
 import com.example.ecommerce.models.Address;
@@ -17,7 +18,6 @@ import com.example.ecommerce.repositories.UserAccountRepository;
 import com.example.ecommerce.repositories.UserRepository;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,9 +85,7 @@ public class DataLoader implements CommandLineRunner {
     }
     return createdDate;
   }
-
-  //todo will be deleting everything, except customers, users/useraccounts, contacts, tours, and tourbookings
-
+  
   private void loadTours() {
     tourRepository.save(
         new Tour(10, new String[]{},
@@ -99,7 +97,7 @@ public class DataLoader implements CommandLineRunner {
 
   private void loadTourBookings() {
     Contact contact = new Contact("Bobby", "Hill", "5128865120", "bhill@student.uml.edu");
-    tourBookingRepository.save(new TourBooking(contact, "79927398713",
+    tourBookingRepository.save(new TourBooking(contact, "79927398713", "WUC-J7",
         createDate("2022-08-19"), 1L));
   }
 
@@ -115,7 +113,7 @@ public class DataLoader implements CommandLineRunner {
 
   }
 
-  private void loadUsers() {
+  private void loadUsers() { //todo possibly replace user and customer with useraccount?
     user = userRepository.save(
         new User("Claire Redfield", "employee", EMPLOYEE, "credfield@ecommerce.com",
             "password12345"));
@@ -134,6 +132,8 @@ public class DataLoader implements CommandLineRunner {
         new UserAccount("user", encodedPassword, true, ADMIN));
     UserAccount userAccountTwo = userAccountRepository.save(
         new UserAccount("userTwo", encodedPassword, true, EMPLOYEE));
+    UserAccount userAccountThree = userAccountRepository.save(
+        new UserAccount("user", encodedPassword, true, BASIC_USER));
   }
 
 

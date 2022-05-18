@@ -30,6 +30,7 @@ public class StringConstants {
   //roles
   public static final String EMPLOYEE = "employee";
   public static final String ADMIN = "admin";
+  public static final String BASIC_USER = "basic user";
 
   //authorization
   public static final String UNAUTHORIZED = "unauthorized";

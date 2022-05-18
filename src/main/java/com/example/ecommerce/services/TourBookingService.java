@@ -12,6 +12,6 @@ public interface TourBookingService {
   TourBooking addTourBooking(TourBooking tourBooking);
 
   TourBooking updateTourBookingById(Long id, TourBooking tourBooking);
-
+  TourBooking getTourBookingByTourCode(String tourCode);
   void deleteTourBookingById(Long id);
 }

@@ -1,6 +1,11 @@
 package com.example.ecommerce.config;
 
 import static com.example.ecommerce.constants.StringConstants.ADMIN;
+import static com.example.ecommerce.constants.StringConstants.BASIC_USER;
+import static com.example.ecommerce.constants.StringConstants.CONTEXT_TOURS;
+import static com.example.ecommerce.constants.StringConstants.CONTEXT_TOUR_BOOKINGS;
+import static com.example.ecommerce.constants.StringConstants.CONTEXT_USER_ACCOUNTS;
+import static com.example.ecommerce.constants.StringConstants.EMPLOYEE;
 
 import com.example.ecommerce.security.AuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,9 +50,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http.csrf().disable().authorizeRequests()
         .antMatchers("/login").permitAll()
-        .antMatchers(HttpMethod.GET, "/products").hasAuthority(ADMIN)
-        //ensure nested authority roles: [{authority: ADMIN}] is checked
-        // add method level security to the Tour entities et al. 
+        .antMatchers("/logout").permitAll()
+        .antMatchers(HttpMethod.GET, CONTEXT_TOURS).permitAll()
+        .antMatchers(HttpMethod.POST, CONTEXT_USER_ACCOUNTS).permitAll()
+
+        .antMatchers(HttpMethod.POST, CONTEXT_TOUR_BOOKINGS)
+        .hasAnyAuthority(BASIC_USER, ADMIN, EMPLOYEE)
+        .antMatchers(HttpMethod.GET, CONTEXT_TOUR_BOOKINGS + "/tourcode/{tourcode}")
+        .hasAnyAuthority(BASIC_USER, ADMIN, EMPLOYEE)
+
+        .antMatchers(HttpMethod.PUT, CONTEXT_TOURS + "/{id}").hasAnyAuthority(ADMIN, EMPLOYEE)
+        .antMatchers(HttpMethod.GET, CONTEXT_USER_ACCOUNTS).hasAnyAuthority(ADMIN, EMPLOYEE)
+        .antMatchers(HttpMethod.GET, CONTEXT_USER_ACCOUNTS + "/{id}")
+        .hasAnyAuthority(ADMIN, EMPLOYEE)
+        .antMatchers(HttpMethod.PUT, CONTEXT_USER_ACCOUNTS + "{id}")
+        .hasAnyAuthority(ADMIN, EMPLOYEE)
+        .antMatchers(HttpMethod.GET, CONTEXT_TOUR_BOOKINGS).hasAnyAuthority(ADMIN, EMPLOYEE)
+        .antMatchers(HttpMethod.GET, CONTEXT_TOUR_BOOKINGS + "{id}")
+        .hasAnyAuthority(ADMIN, EMPLOYEE)
+        .antMatchers(HttpMethod.PUT, CONTEXT_TOUR_BOOKINGS + "{id}")
+        .hasAnyAuthority(ADMIN, EMPLOYEE)
+
+        .antMatchers(HttpMethod.DELETE, CONTEXT_USER_ACCOUNTS + "{id}").hasAnyAuthority(ADMIN)
+        .antMatchers(HttpMethod.DELETE, CONTEXT_TOURS + "/{id}").hasAnyAuthority(ADMIN)
+        .antMatchers(HttpMethod.DELETE, CONTEXT_TOUR_BOOKINGS + "{id}").hasAnyAuthority(ADMIN)
+        .antMatchers(HttpMethod.POST, CONTEXT_TOURS).hasAnyAuthority(ADMIN)
+
         .anyRequest().authenticated()
         .and().sessionManagement().sessionCreationPolicy(
             SessionCreationPolicy.STATELESS);

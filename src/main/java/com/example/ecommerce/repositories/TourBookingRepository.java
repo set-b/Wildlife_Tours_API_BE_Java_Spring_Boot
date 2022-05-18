@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TourBookingRepository extends JpaRepository<TourBooking, Long> {
 
+  boolean existsByTourCode(String tourCode);
+  TourBooking findByTourCode(String tourCode);
 }

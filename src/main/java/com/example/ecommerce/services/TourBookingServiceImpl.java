@@ -3,6 +3,7 @@ package com.example.ecommerce.services;
 import static com.example.ecommerce.constants.StringConstants.NOT_FOUND;
 
 import com.example.ecommerce.exceptions.BadDataResponse;
+import com.example.ecommerce.exceptions.Conflict;
 import com.example.ecommerce.exceptions.ResourceNotFound;
 import com.example.ecommerce.exceptions.ServiceUnavailable;
 import com.example.ecommerce.models.TourBooking;
@@ -59,6 +60,11 @@ public class TourBookingServiceImpl implements TourBookingService {
 
   @Override
   public TourBooking addTourBooking(TourBooking tourBooking) {
+    boolean tourCodeAlreadyExists = tourBookingRepository.existsByTourCode(tourBooking.getTourCode());
+
+    if (tourCodeAlreadyExists) {
+      throw new Conflict(" Tour code already in use!");
+    }
     try {
       return tourBookingRepository.save(tourBooking);
     } catch (Exception e) {
@@ -67,9 +73,28 @@ public class TourBookingServiceImpl implements TourBookingService {
   }
 
   @Override
+  public TourBooking getTourBookingByTourCode(String tourCode){
+    TourBooking tourBookingLookUpResult;
+    try {
+      tourBookingLookUpResult = tourBookingRepository.findByTourCode(tourCode);
+      if (tourBookingLookUpResult != null) {
+        return tourBookingLookUpResult;
+      }
+    } catch (Exception e) {
+      throw new ServiceUnavailable(e.getMessage());
+    }
+    throw new ResourceNotFound(NOT_FOUND + " tourBooking with id " + tourCode);
+  }
+
+  @Override
   public TourBooking updateTourBookingById(Long id, TourBooking tourBooking) {
     if (id < 1) {
       throw new BadDataResponse("id must be positive and cannot be zero");
+    }
+    boolean tourCodeAlreadyExists = tourBookingRepository.existsByTourCode(tourBooking.getTourCode());
+
+    if (tourCodeAlreadyExists) {
+      throw new Conflict(" Tour code already in use!");
     }
     TourBooking updatedTourBooking = null;
     if (!tourBookingRepository.existsById(id)) {
