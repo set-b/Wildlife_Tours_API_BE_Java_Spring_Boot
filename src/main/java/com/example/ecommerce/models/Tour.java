@@ -152,7 +152,7 @@ public class Tour {
   public boolean isEmpty() {
     return
         Objects.isNull(id) &&
-        Objects.isNull(numberOfDays) &&
+            Objects.isNull(numberOfDays) &&
             Objects.isNull(description) &&
             Objects.isNull(price) &&
             Objects.isNull(rating) &&

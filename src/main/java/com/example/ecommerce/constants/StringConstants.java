@@ -27,6 +27,8 @@ public class StringConstants {
   public static final String CONTEXT_PRODUCTS = "/products";
   public static final String CONTEXT_USERS = "/users";
   public static final String CONTEXT_TOURS = "/tours";
+  public static final String CONTEXT_TOUR_BOOKINGS = "/tourbookings";
+  public static final String CONTEXT_USER_ACCOUNTS = "/useraccounts";
 
   //roles
   public static final String EMPLOYEE = "employee";

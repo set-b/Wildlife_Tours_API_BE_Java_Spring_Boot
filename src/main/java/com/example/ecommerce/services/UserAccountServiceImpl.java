@@ -6,8 +6,8 @@ import com.example.ecommerce.exceptions.BadDataResponse;
 import com.example.ecommerce.exceptions.Conflict;
 import com.example.ecommerce.exceptions.ResourceNotFound;
 import com.example.ecommerce.exceptions.ServiceUnavailable;
-import com.example.ecommerce.models.User;
-import com.example.ecommerce.repositories.UserRepository;
+import com.example.ecommerce.models.UserAccount;
+import com.example.ecommerce.repositories.UserAccountRepository;
 import java.util.Comparator;
 import java.util.List;
 import org.slf4j.Logger;
@@ -17,27 +17,23 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
-/**
- * This class contains the methods that are called by the UserController, and implemented from the
- * UserService interface.
- */
 @Service
-public class UserServiceImpl implements UserService {
+public class UserAccountServiceImpl implements UserAccountService {
 
-  private final Logger logger = LoggerFactory.getLogger(UserService.class);
+  private final Logger logger = LoggerFactory.getLogger(UserAccountService.class);
 
   @Autowired
-  private UserRepository userRepository;
+  private UserAccountRepository userRepository;
 
   @Override
-  public List<User> queryUsers(User user) {
+  public List<UserAccount> queryUserAccounts(UserAccount user) {
     try {
       if (user.isEmpty()) {
-        List<User> users = userRepository.findAll();
-        users.sort(Comparator.comparing(User::getId));
+        List<UserAccount> users = userRepository.findAll();
+        users.sort(Comparator.comparing(UserAccount::getId));
         return users;
       } else {
-        Example<User> userExample = Example.of(user);
+        Example<UserAccount> userExample = Example.of(user);
         return userRepository.findAll(userExample);
       }
     } catch (Exception e) {
@@ -47,11 +43,11 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User getUserById(Long id) {
+  public UserAccount getUserAccountById(Long id) {
     if (id < 1) {
       throw new BadDataResponse("id must be positive and cannot be zero");
     }
-    User userLookUpResult;
+    UserAccount userLookUpResult;
     try {
       userLookUpResult = userRepository.findById(id).orElse(null);
       if (userLookUpResult != null) {
@@ -64,12 +60,12 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User addUser(User user) {
+  public UserAccount addUserAccount(UserAccount user) {
 
-    boolean emailAlreadyExists = userRepository.existsByEmail(user.getEmail());
+    boolean emailAlreadyExists = userRepository.existsByUsername(user.getUsername());
 
     if (emailAlreadyExists) {
-      throw new Conflict(" Email already in use!");
+      throw new Conflict(" Username already in use!");
     }
     try {
       return userRepository.save(user);
@@ -79,50 +75,51 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User updateUserById(Long id, User user) {
+  public UserAccount updateUserAccountById(Long id, UserAccount user) {
     if (id < 1) {
       throw new BadDataResponse("id must be positive and cannot be zero");
     }
-    User updatedUser = null;
+    UserAccount updatedUserAccount = null;
     if (!userRepository.existsById(id)) {
       throw new ResourceNotFound(NOT_FOUND + "user with id " + id);
     }
-    boolean emailAlreadyExists = userRepository.existsByEmail(user.getEmail());
-    if (emailAlreadyExists) {
-      throw new Conflict(" Email already in use!");
+    boolean userNameAlreadyExists = userRepository.existsByUsername(user.getUsername());
+    if (userNameAlreadyExists) {
+      throw new Conflict(" Username already in use!");
     }
     try {
       user.setId(id);
-      updatedUser = userRepository.save(user);
+      updatedUserAccount = userRepository.save(user);
     } catch (Exception e) {
       throw new ServiceUnavailable(e);
     }
-    return updatedUser;
+    return updatedUserAccount;
   }
 
   @Override
-  public User findUserByEmail(String email) {
-    User foundUser = null;
+  public UserAccount findUserAccountByUserName(String userName) {
+    UserAccount foundUserAccount = null;
 
     try {
-      foundUser = userRepository.findByEmail(email); //maybe finduserbyemail
+      foundUserAccount = userRepository.findByUsername(userName);
     } catch (DataAccessException e) {
       logger.error(e.getMessage());
     }
 
-    return foundUser;
+    return foundUserAccount;
   }
 
   @Override
-  public void deleteUserById(Long id) {
+  public void deleteUserAccountById(Long id) {
     if (id < 1) {
       throw new BadDataResponse("id must be positive and cannot be zero");
     }
-    getUserById(id);
+    getUserAccountById(id);
     try {
       userRepository.deleteById(id);
     } catch (Exception e) {
       throw new ServiceUnavailable("Something went wrong");
     }
   }
+
 }

@@ -7,7 +7,9 @@ public class LoginResponse {
 
   private String jwt;
 
-  public LoginResponse(){super();} //super why?
+  public LoginResponse() {
+    super();
+  } //super why?
 
   public LoginResponse(String jwt) {
     this.jwt = jwt;

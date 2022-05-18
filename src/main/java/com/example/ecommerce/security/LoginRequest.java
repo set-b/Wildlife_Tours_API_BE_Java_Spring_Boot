@@ -8,7 +8,9 @@ public class LoginRequest {
   private String username;
   private String password;
 
-  public LoginRequest(){super();}
+  public LoginRequest() {
+    super();
+  }
 
   public LoginRequest(String username, String password) {
     this.username = username;

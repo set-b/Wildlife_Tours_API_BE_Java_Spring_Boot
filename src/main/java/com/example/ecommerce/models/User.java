@@ -4,7 +4,6 @@ import static com.example.ecommerce.constants.StringConstants.BAD_DATA;
 import static com.example.ecommerce.constants.StringConstants.REQUIRED_FIELD;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.Arrays;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;

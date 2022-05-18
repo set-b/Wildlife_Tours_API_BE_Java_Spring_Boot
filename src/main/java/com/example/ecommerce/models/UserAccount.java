@@ -1,5 +1,7 @@
 package com.example.ecommerce.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +10,8 @@ import javax.persistence.Id;
 
 @Entity(name = "user_account")
 public class UserAccount {
-//todo include validation for fields?? (i.e. notnull, etc.)
+
+  //todo include validation for fields?? (i.e. notnull, etc.)
   @Id
   @Column(name = "user_account_id") // might change to "user_id"
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,7 +64,21 @@ public class UserAccount {
     isActive = active;
   }
 
-  public String getRole(){return role;}
+  public String getRole() {
+    return role;
+  }
 
-  public void setRole(String role){this.role = role;}
+  public void setRole(String role) {
+    this.role = role;
+  }
+
+  @JsonIgnore
+  public boolean isEmpty() {
+    return
+        Objects.isNull(id) &&
+            Objects.isNull(username) &&
+            Objects.isNull(role) &&
+            Objects.isNull(isActive) &&
+            Objects.isNull(password);
+  }
 }
