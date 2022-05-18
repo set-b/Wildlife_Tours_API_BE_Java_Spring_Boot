@@ -1,5 +1,8 @@
 package com.example.ecommerce.models;
 
+import static com.example.ecommerce.constants.StringConstants.REQUIRED_FIELD;
+
+import com.example.ecommerce.validators.Vaccinations;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -9,6 +12,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
 
 @Entity
 @Table(name = "tours")
@@ -17,17 +27,21 @@ public class Tour {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  //positive
-  //minimum of at least 1
+  @Positive
+  @Min(1)
   private int numberOfDays;
-  // each entry must have minimum of 2 characters each
+  @Vaccinations
   private String[] vaccinations;
-  // description minimum of 7 characters
+  @NotNull(message = "Description " + REQUIRED_FIELD)
+  @Length(min = 7)
   private String description;
-  // formatted to currency
+  @NotNull(message = "Price " + REQUIRED_FIELD)
+  @NumberFormat(style = Style.CURRENCY)
   private BigDecimal price;
-  // minimum 1; max 5
+  @Min(1)
+  @Max(5)
   private int rating;
+  //@NotNull()
   private boolean isActive;
 
   public Tour() {

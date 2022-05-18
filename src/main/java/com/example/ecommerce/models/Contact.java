@@ -2,12 +2,15 @@ package com.example.ecommerce.models;
 
 import static com.example.ecommerce.constants.StringConstants.REQUIRED_FIELD;
 
+import com.example.ecommerce.validators.Phone;
 import com.example.ecommerce.validators.State;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Objects;
 import javax.persistence.Embeddable;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 /**
@@ -17,13 +20,17 @@ import javax.validation.constraints.Pattern;
 @Table(name = "contacts")
 public class Contact {
 
-  // accept all non-special characters
+  @NotNull(message = "First name " + REQUIRED_FIELD)
+  @Pattern(regexp = "^([ \\u00c0-\\u01ffa-zA-Z'\\-])+$")
   private String firstName;
-  // accept all non-special characters
+  @NotNull(message = "Last name " + REQUIRED_FIELD)
+  @Pattern(regexp = "^([ \\u00c0-\\u01ffa-zA-Z'\\-])+$")
   private String lastName;
-  // phone number regex
+  @NotNull(message = "Phone number " + REQUIRED_FIELD)
+  @Phone(message = "Must be a valid phone number") //todo test this
   private String phoneNo;
-  // email annotation
+  @NotNull(message = "Email " + REQUIRED_FIELD)
+  @Email
   private String email;
 
   public Contact(){}
