@@ -2,7 +2,6 @@ package com.example.ecommerce.data;
 
 import static com.example.ecommerce.constants.StringConstants.ADMIN;
 import static com.example.ecommerce.constants.StringConstants.EMPLOYEE;
-import static com.example.ecommerce.constants.StringConstants.MANAGER_ROLE_TYPE;
 
 import com.example.ecommerce.models.Address;
 import com.example.ecommerce.models.Customer;
@@ -27,7 +26,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 /**
@@ -195,7 +193,10 @@ public class DataLoader implements CommandLineRunner {
 //        new User("Test", "Manager", MANAGER_ROLE_TYPE,
 //            "test@testemail.com", encodedPassword));
 
-    UserAccount userAccount = userAccountRepository.save(new UserAccount("user", "password", true));
+    UserAccount userAccount = userAccountRepository.save(
+        new UserAccount("user", "password", true, ADMIN));
+    UserAccount userAccountTwo = userAccountRepository.save(
+        new UserAccount("userTwo", "password", true, EMPLOYEE));
   }
 
 

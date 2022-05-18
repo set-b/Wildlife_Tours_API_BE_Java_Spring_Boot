@@ -1,8 +1,11 @@
 package com.example.ecommerce.config;
 
+import static com.example.ecommerce.constants.StringConstants.ADMIN;
+
 import com.example.ecommerce.security.AuthorizationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -41,10 +44,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http.csrf().disable().authorizeRequests()
-        .antMatchers("/login").permitAll() //added slash, but endpoint might not contain slash
+        .antMatchers("/login").permitAll()
+        .antMatchers(HttpMethod.GET, "/products").hasAuthority(ADMIN)
+        //ensure nested authority roles: [{authority: ADMIN}] is checked
+        // add method level security to the Tour entities et al. 
         .anyRequest().authenticated()
         .and().sessionManagement().sessionCreationPolicy(
-            SessionCreationPolicy.STATELESS); // this will be used for authorization
+            SessionCreationPolicy.STATELESS);
 
     http.addFilterBefore(authorizationFilter, UsernamePasswordAuthenticationFilter.class);
   }

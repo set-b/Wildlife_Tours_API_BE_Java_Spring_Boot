@@ -15,16 +15,18 @@ public class UserAccount {
   private Long id;
   private String username;
   private String password;
+  private String role;
   private boolean isActive;
 
   public UserAccount() {
     super();
   }
 
-  public UserAccount(String username, String password, boolean isActive) {
+  public UserAccount(String username, String password, boolean isActive, String role) {
     this.username = username;
     this.password = password;
     this.isActive = isActive;
+    this.role = role;
   }
 
   public Long getId() {
@@ -58,4 +60,8 @@ public class UserAccount {
   public void setActive(boolean active) {
     isActive = active;
   }
+
+  public String getRole(){return role;}
+
+  public void setRole(String role){this.role = role;}
 }

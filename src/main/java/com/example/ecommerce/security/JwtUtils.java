@@ -1,5 +1,6 @@
 package com.example.ecommerce.security;
 
+import static com.example.ecommerce.constants.StringConstants.ROLES_ATTRIBUTE;
 import static com.example.ecommerce.constants.StringConstants.SECRET;
 
 import io.jsonwebtoken.Claims;
@@ -38,6 +39,7 @@ public class JwtUtils {
 
   public String generateToken(UserDetails userDetails) {
     Map<String, Object> claims = new HashMap<>();
+    claims.put(ROLES_ATTRIBUTE, userDetails.getAuthorities());
     return createToken(claims, userDetails.getUsername());
   }
 
