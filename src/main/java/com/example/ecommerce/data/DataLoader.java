@@ -26,6 +26,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 /**
@@ -52,8 +54,8 @@ public class DataLoader implements CommandLineRunner {
   @Autowired
   private UserAccountRepository userAccountRepository;
 
-//  @Autowired
-//  private BCryptPasswordEncoder bCryptPasswordEncoder;
+  @Autowired
+  private PasswordEncoder bCryptPasswordEncoder;
 
   private Greeting greeting;
   private Greeting greetingTwo;
@@ -188,15 +190,12 @@ public class DataLoader implements CommandLineRunner {
     userFour = userRepository.save(
         new User("Michael Scott", "Boss", ADMIN, "mscott@ecommerce.com",
             "supersecretpassword1!"));
-//    String encodedPassword = bCryptPasswordEncoder.encode("password12345678");
-//    User authorizationUserTest = userRepository.save(
-//        new User("Test", "Manager", MANAGER_ROLE_TYPE,
-//            "test@testemail.com", encodedPassword));
 
+    String encodedPassword = bCryptPasswordEncoder.encode("password");
     UserAccount userAccount = userAccountRepository.save(
-        new UserAccount("user", "password", true, ADMIN));
+        new UserAccount("user", encodedPassword, true, ADMIN));
     UserAccount userAccountTwo = userAccountRepository.save(
-        new UserAccount("userTwo", "password", true, EMPLOYEE));
+        new UserAccount("userTwo", encodedPassword, true, EMPLOYEE));
   }
 
 
