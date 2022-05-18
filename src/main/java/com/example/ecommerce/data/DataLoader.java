@@ -4,11 +4,14 @@ import static com.example.ecommerce.constants.StringConstants.ADMIN;
 import static com.example.ecommerce.constants.StringConstants.EMPLOYEE;
 
 import com.example.ecommerce.models.Address;
+import com.example.ecommerce.models.Contact;
 import com.example.ecommerce.models.Customer;
 import com.example.ecommerce.models.Greeting;
 import com.example.ecommerce.models.Item;
 import com.example.ecommerce.models.Order;
 import com.example.ecommerce.models.Product;
+import com.example.ecommerce.models.Tour;
+import com.example.ecommerce.models.TourBooking;
 import com.example.ecommerce.models.User;
 import com.example.ecommerce.models.UserAccount;
 import com.example.ecommerce.repositories.CustomerRepository;
@@ -16,6 +19,8 @@ import com.example.ecommerce.repositories.GreetingRepository;
 import com.example.ecommerce.repositories.ItemRepository;
 import com.example.ecommerce.repositories.OrderRepository;
 import com.example.ecommerce.repositories.ProductRepository;
+import com.example.ecommerce.repositories.TourBookingRepository;
+import com.example.ecommerce.repositories.TourRepository;
 import com.example.ecommerce.repositories.UserAccountRepository;
 import com.example.ecommerce.repositories.UserRepository;
 import java.math.BigDecimal;
@@ -26,7 +31,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -56,6 +60,12 @@ public class DataLoader implements CommandLineRunner {
 
   @Autowired
   private PasswordEncoder bCryptPasswordEncoder;
+
+  @Autowired
+  private TourRepository tourRepository;
+
+  @Autowired
+  private TourBookingRepository tourBookingRepository;
 
   private Greeting greeting;
   private Greeting greetingTwo;
@@ -93,6 +103,8 @@ public class DataLoader implements CommandLineRunner {
 
   @Override
   public void run(String... args) throws Exception {
+    loadTours();
+    loadTourBookings();
     loadGreetings();
     loadCustomers();
     loadOrders();
@@ -113,10 +125,25 @@ public class DataLoader implements CommandLineRunner {
     return createdDate;
   }
 
-  //todo save all and randomization?
+  //todo will be deleting everything, except customers, users/useraccounts, contacts, tours, and tourbookings
   private void loadGreetings() {
     greeting = greetingRepository.save(new Greeting("hello"));
     greetingTwo = greetingRepository.save(new Greeting("hi"));
+  }
+
+  private void loadTours() {
+    tourRepository.save(
+        new Tour(10, new String[]{},
+            "description", BigDecimal.valueOf(2099.99), 5, true));
+    tourRepository.save(
+        new Tour(10, new String[]{"TB"},
+            "description", BigDecimal.valueOf(2099.99), 5, true));
+  }
+
+  private void loadTourBookings() {
+    Contact contact = new Contact("Bobby", "Hill", "5128865120", "bhill@student.uml.edu");
+    tourBookingRepository.save(new TourBooking(contact, "79927398713",
+        createDate("2022-08-19"), 1L));
   }
 
   private void loadCustomers() {
