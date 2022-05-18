@@ -21,10 +21,7 @@ public class StringConstants {
   public static final String CONFLICT = "Conflict";
 
   //endpoint constants
-  public static final String CONTEXT_GREETINGS = "/greetings";
   public static final String CONTEXT_CUSTOMERS = "/customers";
-  public static final String CONTEXT_ORDERS = "/orders";
-  public static final String CONTEXT_PRODUCTS = "/products";
   public static final String CONTEXT_USERS = "/users";
   public static final String CONTEXT_TOURS = "/tours";
   public static final String CONTEXT_TOUR_BOOKINGS = "/tourbookings";
