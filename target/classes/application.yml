@@ -14,7 +14,7 @@ spring:
     url: jdbc:postgresql:user
     username: user
     password: password
-    driverClassName:
+    driverClassName: org.postgresql.Driver
   mvc:
     pathMatch:
       matching-strategy: ant-path-matcher
