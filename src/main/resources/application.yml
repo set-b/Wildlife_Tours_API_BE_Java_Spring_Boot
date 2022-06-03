@@ -4,20 +4,16 @@ logging:
 
 spring:
   jpa:
-    database: MYSQL
+    database: POSTGRESQL
     show-sql: true
     hibernate:
       ddl-auto: create
   datasource:
-    platform: mysql
-    url: jdbc:mysql://localhost:3306/mysql
-    username: root
-    password: root
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/
+    username: user
+    password: password
     driverClassName:
   mvc:
     pathMatch:
       matching-strategy: ant-path-matcher
-#  security:
-#    user:
-#      name: user
-#      password: password12345678
