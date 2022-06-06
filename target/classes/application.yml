@@ -9,8 +9,8 @@ spring:
     hibernate:
       ddl-auto: create
   datasource:
-    platform: mysql
-    url: jdbc:mysql://localhost:3306/mysql
+    platform: wildlife_tours
+    url: jdbc:mysql://localhost:3306/wildlife_tours
 #    url: jdbc:mysql://us-cdbr-east-05.cleardb.net/heroku_d9dba035561c63c?password=edda012d&reconnect=true&user=be605943a5cabd
     username: root
     password: root
