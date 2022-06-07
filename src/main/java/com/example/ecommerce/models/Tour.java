@@ -152,10 +152,10 @@ public class Tour {
   public boolean isEmpty() {
     return
         Objects.isNull(id) &&
-            Objects.isNull(numberOfDays) &&
+            Objects.equals(numberOfDays, 0) &&
             Objects.isNull(description) &&
             Objects.isNull(price) &&
-            Objects.isNull(rating) &&
-            Objects.isNull(isActive);
+            Objects.equals(rating, 0) &&
+            Objects.equals(isActive, false);
   }
 }
