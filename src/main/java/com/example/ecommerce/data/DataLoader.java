@@ -85,14 +85,28 @@ public class DataLoader implements CommandLineRunner {
     }
     return createdDate;
   }
-  
+
   private void loadTours() {
     tourRepository.save(
-        new Tour(10, new String[]{},
-            "description", BigDecimal.valueOf(2099.99), 5, true));
+        new Tour("Explore India", "Asia", 10, new String[]{"Covid-19", "TB", "HepA", "HepB", "Tdap"},
+            "Bengal Tiger, Indian Elephant, Rhinoceros, Buffalo, Macaques, Chital, Monkey, Sambar deer, Peafowl, Panther and many more.",
+            BigDecimal.valueOf(2099.99), 5, true));
     tourRepository.save(
-        new Tour(10, new String[]{"TB"},
-            "description", BigDecimal.valueOf(2099.99), 5, true));
+        new Tour("Adventure in Zimbabwe", "Africa", 10, new String[]{"Covid-19", "HepA", "HepB", "Tdap", "RTS,S"},
+            "Zebra, Cheetah, African Elephant, Monkey, Flamingo, Lion, Giraffe, Wildebeest, and more.",
+            BigDecimal.valueOf(1245.79), 5, true));
+    tourRepository.save(
+        new Tour("Dive into the Galapagos Islands", "Pacific Ocean", 10, new String[]{"TB", "RTS,S"},
+            "Sea turtles, whales, sea otters, seals, sea lions, dolphins, jellyfish, sharks, fish, starfish, seahorses, corals, octopus and more.",
+            BigDecimal.valueOf(845.50), 5, true));
+    tourRepository.save(
+        new Tour("Discover the Amazing Amazon", "South America", 10, new String[]{},
+            "Jaguar, Giant River Otter, Red Howler Monkey, Capybara, Black-capped Squirrel Monkey, Sloth, Macaw, Harpy Eagle, Toucan, Tamarin and many more.",
+            BigDecimal.valueOf(1449.95), 5, true));
+    tourRepository.save(
+        new Tour("Experience the Beauty of Canada", "North America", 10, new String[]{"Covid-19","TB"},
+            "Polar Bear, Arctic Fox, Wolf, Snowy Owl, Penguins, Seal, Reindeer and many more.",
+            BigDecimal.valueOf(3554.25), 5, true));
   }
 
   private void loadTourBookings() {
@@ -129,9 +143,9 @@ public class DataLoader implements CommandLineRunner {
 
     String encodedPassword = bCryptPasswordEncoder.encode("password");
     UserAccount userAccount = userAccountRepository.save(
-        new UserAccount("user", encodedPassword, true, ADMIN));
+        new UserAccount("admin", encodedPassword, true, ADMIN));
     UserAccount userAccountTwo = userAccountRepository.save(
-        new UserAccount("userTwo", encodedPassword, true, EMPLOYEE));
+        new UserAccount("employee", encodedPassword, true, EMPLOYEE));
     UserAccount userAccountThree = userAccountRepository.save(
         new UserAccount("user", encodedPassword, true, BASIC_USER));
   }

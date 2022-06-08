@@ -27,6 +27,12 @@ public class Tour {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+  @NotNull(message = "Title " + REQUIRED_FIELD)
+  @Length(min = 7)
+  private String title;
+  @NotNull(message = "Location " + REQUIRED_FIELD)
+  @Length(min = 3)
+  private String location; // verify location through a custom validator?
   @Positive
   @Min(1)
   private int numberOfDays;
@@ -47,8 +53,10 @@ public class Tour {
   public Tour() {
   }
 
-  public Tour(int numberOfDays, String[] vaccinations, String description, BigDecimal price,
-      int rating, boolean isActive) {
+  public Tour(String title, String location, int numberOfDays, String[] vaccinations,
+      String description, BigDecimal price, int rating, boolean isActive) {
+    this.title = title;
+    this.location = location;
     this.numberOfDays = numberOfDays;
     this.vaccinations = vaccinations;
     this.description = description;
@@ -63,6 +71,22 @@ public class Tour {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  public String getLocation() {
+    return location;
+  }
+
+  public void setLocation(String location) {
+    this.location = location;
   }
 
   public int getNumberOfDays() {
@@ -117,6 +141,8 @@ public class Tour {
   public String toString() {
     return "Tour{" +
         "id=" + id +
+        ", title='" + title + '\'' +
+        ", location='" + location + '\'' +
         ", numberOfDays=" + numberOfDays +
         ", vaccinations=" + Arrays.toString(vaccinations) +
         ", description='" + description + '\'' +
@@ -136,14 +162,16 @@ public class Tour {
     }
     Tour tour = (Tour) o;
     return numberOfDays == tour.numberOfDays && rating == tour.rating && isActive == tour.isActive
-        && Objects.equals(id, tour.id) && Arrays.equals(vaccinations,
+        && Objects.equals(id, tour.id) && Objects.equals(title, tour.title)
+        && Objects.equals(location, tour.location) && Arrays.equals(vaccinations,
         tour.vaccinations) && Objects.equals(description, tour.description)
         && Objects.equals(price, tour.price);
   }
 
   @Override
   public int hashCode() {
-    int result = Objects.hash(id, numberOfDays, description, price, rating, isActive);
+    int result = Objects.hash(id, title, location, numberOfDays, description, price, rating,
+        isActive);
     result = 31 * result + Arrays.hashCode(vaccinations);
     return result;
   }
@@ -152,6 +180,8 @@ public class Tour {
   public boolean isEmpty() {
     return
         Objects.isNull(id) &&
+            Objects.isNull(title) &&
+            Objects.isNull(location) &&
             Objects.equals(numberOfDays, 0) &&
             Objects.isNull(description) &&
             Objects.isNull(price) &&
